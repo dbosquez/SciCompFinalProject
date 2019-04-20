@@ -7,7 +7,7 @@ close all
 
 % Define grid
 
-iter = 800; %iterations for convergence
+iter = 6000; %iterations for convergence
 N = 600; %grid intervals
 h = (2*pi)/(N+1); %grid step dx = dy
 ax = 0;
@@ -57,7 +57,7 @@ figure;
 contour3(xval,yval,U,len,'ShowText','off')
 xlabel('0 < X < 2pi')
 ylabel('0 < Y < 2pi')
-zlabel('U0')
+zlabel('U(Xj,Yk)')
 %figure;
 % contour3(x500,y500,U500,len,'ShowText','off')
 % xlabel('0 < X < 2pi')
@@ -75,4 +75,6 @@ zlabel('U0')
 % zlabel('U3')
 figure;
 plot(1:totl,U(:))
-
+title('Solution U for every dj,dk')
+xlabel('Step jk')
+ylabel('U(Xj,Yk)')
