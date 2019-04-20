@@ -7,8 +7,8 @@ close all
 
 % Define grid
 
-iter = 500; %iterations for convergence
-N = 1000; %grid intervals
+iter = 800; %iterations for convergence
+N = 600; %grid intervals
 h = (2*pi)/(N+1); %grid step dx = dy
 ax = 0;
 ay = ax;
@@ -42,7 +42,9 @@ U2 = U(:); % vectorized array
 % Commence Gauss Seidel Vector solver
 
 for i=1:iter
+    
  for K = 2:len-1
+     U(1,K)=(.25*(U(2,K)+U(3,K)+U(2,K-1)+U(2,K+1)))+(.25*h*h*F(1+((K-1)*len))); % "Ghost Node" for Neumann condition
      for J = 2:len-1
          U(J,K)= (.25*(U(J-1,K)+U(J+1,K)+U(J,K-1)+U(J,K+1)))+(.25*h*h*F(J+((K-1)*len)));
      %U2(J+(K-1)*len) = .25*(U(J-1+(K)*len)+U(J+1+((K)*len))+U(J+((K-1)*len))+U(J+((K)*len)));
@@ -55,13 +57,22 @@ figure;
 contour3(xval,yval,U,len,'ShowText','off')
 xlabel('0 < X < 2pi')
 ylabel('0 < Y < 2pi')
-zlabel('U')
-
-
+zlabel('U0')
+%figure;
+% contour3(x500,y500,U500,len,'ShowText','off')
+% xlabel('0 < X < 2pi')
+% ylabel('0 < Y < 2pi')
+% zlabel('U1')
+%  figure;
+%  contour3(x200,y200,U200,len,'ShowText','off')
+%  xlabel('0 < X < 2pi')
+%  ylabel('0 < Y < 2pi')
+%  zlabel('U2')
+%figure;
+% contour3(x62,y62,UN62,len,'ShowText','off')
+% xlabel('0 < X < 2pi')
+% ylabel('0 < Y < 2pi')
+% zlabel('U3')
 figure;
-contour3(144,144,U144,len,'ShowText','off')
-xlabel('0 < X < 2pi')
-ylabel('0 < Y < 2pi')
-zlabel('U')
-
+plot(1:totl,U(:))
 
