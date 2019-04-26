@@ -7,7 +7,7 @@ close all
 
 % Define grid
 
-iter = 6000; %iterations for convergence
+iter = 24000; %iterations for convergence
 N = 600; %grid intervals
 h = (2*pi)/(N+1); %grid step dx = dy
 ax = 0;
@@ -25,7 +25,7 @@ k = st;
 xval=(h.*j-1);
 yval=(h.*k-1);
 % Initialize and vectorize knowns
-
+fprintf('Running')
 F = sin(pi.*(((h.*(j-1))-ax)./(bx-ax)))*cos((pi/2).*((2.*(((h.*(k-1))-ay)./(by-ay)))+1)); % F matrix of known F's for all x and y's
 F = F(:); % Vectorizes F matrix
 fa = (h.*(j-1)).*((h.*(j-1))-ax).^2;
@@ -52,12 +52,13 @@ for i=1:iter
  end
 
 end
-
-figure;
-contour3(xval,yval,U,len,'ShowText','off')
-xlabel('0 < X < 2pi')
-ylabel('0 < Y < 2pi')
-zlabel('U(Xj,Yk)')
+clc
+fprintf('Done')
+% figure;
+% contour3(xval,yval,U,len,'ShowText','off')
+% xlabel('0 < X < 2pi')
+% ylabel('0 < Y < 2pi')
+% zlabel('U(Xj,Yk)')
 %figure;
 % contour3(x500,y500,U500,len,'ShowText','off')
 % xlabel('0 < X < 2pi')
@@ -73,8 +74,8 @@ zlabel('U(Xj,Yk)')
 % xlabel('0 < X < 2pi')
 % ylabel('0 < Y < 2pi')
 % zlabel('U3')
-figure;
-plot(1:totl,U(:))
-title('Solution U for every dj,dk')
-xlabel('Step jk')
-ylabel('U(Xj,Yk)')
+% figure;
+% plot(1:totl,U(:))
+% title('Solution U for every dj,dk')
+% xlabel('Step jk')
+% ylabel('U(Xj,Yk)')
