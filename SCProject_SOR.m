@@ -42,7 +42,7 @@ preU = U;  % initial value for Ujkn-1
 %U=U(:);
 
 % Commence SOR Gauss Seidel Vector solver
-w=1.6; % relaxation value
+w=1.71; % relaxation value
  % initial value for Ujkn-1
 for i=1:iter
  for K = 2:len-1
@@ -56,12 +56,15 @@ for i=1:iter
  end
 end
 clc
+figure;
 fprintf('Done\n')
-% figure;
-% contour3(xval,yval,U,len,'ShowText','off')
-% xlabel('0 < X < 2pi')
-% ylabel('0 < Y < 2pi')
-% zlabel('U(Xj,Yk)')
+%%
+
+ figure;
+ contour3(xval,yval,U,len,'ShowText','off')
+ xlabel('0 < X < 2pi')
+ ylabel('0 < Y < 2pi')
+ zlabel('U(Xj,Yk)')
 %figure;
 % contour3(x500,y500,U500,len,'ShowText','off')
 % xlabel('0 < X < 2pi')
@@ -76,9 +79,9 @@ fprintf('Done\n')
 % contour3(x62,y62,UN62,len,'ShowText','off')
 % xlabel('0 < X < 2pi')
 % ylabel('0 < Y < 2pi')
-% zlabel('U3')
-% figure;
-% plot(1:totl,U(:))
-% title('Solution U for every dj,dk')
-% xlabel('Step jk')
-% ylabel('U(Xj,Yk)')
+% % zlabel('U3')
+%  figure;
+%  plot(1:totl,U(:))
+%  title('Solution U for every dj,dk')
+%  xlabel('Step jk')
+%  ylabel('U(Xj,Yk)')

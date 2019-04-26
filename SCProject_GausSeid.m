@@ -7,7 +7,7 @@ close all
 
 % Define grid
 
-iter = 24000; %iterations for convergence
+iter = 16000; %iterations for convergence
 N = 600; %grid intervals
 h = (2*pi)/(N+1); %grid step dx = dy
 ax = 0;
@@ -54,11 +54,15 @@ for i=1:iter
 end
 clc
 fprintf('Done')
-% figure;
-% contour3(xval,yval,U,len,'ShowText','off')
-% xlabel('0 < X < 2pi')
-% ylabel('0 < Y < 2pi')
-% zlabel('U(Xj,Yk)')
+figure;
+
+
+%%
+figure;
+contour3(xval,yval,U,len,'ShowText','off')
+xlabel('0 < X < 2pi')
+ylabel('0 < Y < 2pi')
+zlabel('U(Xj,Yk)')
 %figure;
 % contour3(x500,y500,U500,len,'ShowText','off')
 % xlabel('0 < X < 2pi')
