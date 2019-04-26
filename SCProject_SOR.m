@@ -31,7 +31,7 @@ F = F(:); % Vectorizes F matrix
 fa = (h.*(j-1)).*((h.*(j-1))-ax).^2;
 ga = ((h.*(j-1))-ax).^2.*cos((h.*(j-1)));
 
-%create the U vector then populate with known conditions.
+%% Create the U vector then populate with known conditions.
 
 U = zeros(len); % initialize solution array
 U(1:len)= ga; % U(x,y=ay) BC
@@ -39,19 +39,20 @@ U(endbc:totl)=fa; % U(x,y=by) BC
 U(len,:) = ga(len)+((((h.*(k-1))-ay)/(bx-ay))*(fa(len)-ga(len))); % U(bx,y) BC
 U2 = U(:); % vectorized array
 %U=U(:);
-% Commence Gauss Seidel Vector solver
-w=1;
+
+% Commence SOR Gauss Seidel Vector solver
+w=1; % relaxation value
+preU = 0; % initial value for Ujkn-1
 for i=1:iter
-    
  for K = 2:len-1
      U(1,K)=(.25*(U(2,K)+U(3,K)+U(2,K-1)+U(2,K+1)))+(.25*h*h*F(1+((K-1)*len))); % "Ghost Node" for Neumann condition
      for J = 2:len-1
-         U(J,K)= (.25*(U(J-1,K)+U(J+1,K)+U(J,K-1)+U(J,K+1)))+(.25*h*h*F(J+((K-1)*len)));
-         U(J,K)=w*U(J,K)-
-     %U2(J+(K-1)*len) = .25*(U(J-1+(K)*len)+U(J+1+((K)*len))+U(J+((K-1)*len))+U(J+((K)*len)));
+         U(J,K)= (.25*(U(J-1,K)+U(J+1,K)+U(J,K-1)+U(J,K+1)))+(.25*h*h*F(J+((K-1)*len))); % Explicit Ujkn value for current iterative step n (Gauss Seidel soln)
+         U(J,K)=w*U(J,K)+(1-w)*preU; % SOR expression: Implicit Ujkn+1 = w*(Explicit Ujkn)+(1-w)*(Previous Ujkn-1 from last iteration)
+         preU = U(J,K); % Ujkn-1 term for next n iteration
+         %U2(J+(K-1)*len) = .25*(U(J-1+(K)*len)+U(J+1+((K)*len))+U(J+((K-1)*len))+U(J+((K)*len)));
      end
  end
-
 end
 
 % figure;
