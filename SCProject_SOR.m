@@ -4,10 +4,16 @@ clc
 close all
 fprintf('Running\n') % Message to note code has started/currently running
 
-%addup_checkpoint_rand.m
-
-
-%Checkpoint every 25 iterations
+% CHECKPOINTING is commented, uncomment to enable
+% if exist( 'checkpointSOR.mat','file' ) % If a checkpoint file exists, load it
+%     fprintf('Checkpoint file found - Loading\n');
+%     load('checkpointGS.mat')
+% 
+% else %otherwise, start from the beginning
+%     fprintf('No checkpoint file found - starting from beginning\n');
+%     mysum=0;
+%     countmin=1;
+% end
 
 
 % Define grid
@@ -54,7 +60,7 @@ preU = U;  % initial values for Ujkn-1 (Previous iteration solution)
 
 % Commence SOR Gauss-Seidel Vector solver
 
-for i=1:iter % loop for every i iteration of method until solution convergence
+for i=1:iter %countmin:iter <-- CHECKPOINT STEP % loop for every i iteration of method until solution convergence
     for K = 2:len-1 % Cycling through column entries (Y dimension)
     U(1,K)=(.25*(U(2,K)+U(3,K)+U(2,K-1)+U(2,K+1)))+(.25*h*h*F(1+((K-1)*len))); % "Ghost Node" entries for Neumann condition
         for J = 2:len-1 % Cycling through row entries (X dimension)
@@ -64,7 +70,13 @@ for i=1:iter % loop for every i iteration of method until solution convergence
          
         %U2(J+(K-1)*len) = .25*(U(J-1+(K)*len)+U(J+1+((K)*len))+U(J+((K-1)*len))+U(J+((K)*len))); %(Vectorized discretization form "turned off", problem with Yk value indexing.)
         end
-    end   
+    end 
+%     countmin = i+1; %<-- CHECKPOINT STEPS  %If we load this checkpoint, we want to start on the next iteration
+%     if mod(count,25)==0 
+%         %save checkpoint   
+%         fprintf('Saving checkpoint\n');
+%         save('checkpointGS.mat');
+%     end
 end
 clc
 fprintf('Done\n') % Signal to user operation is complete
